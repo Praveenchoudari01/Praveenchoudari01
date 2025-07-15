@@ -19,6 +19,8 @@ jobs:
         uses: Platane/snk@v3
         with:
           github_user_name: Praveenchoudari01
+          outputs: |
+            ./output/github-contribution-grid-snake.svg
 
       - name: Commit and push the generated snake
         uses: EndBug/add-and-commit@v9
@@ -26,3 +28,4 @@ jobs:
           author_name: github-actions
           author_email: github-actions@github.com
           message: "Generate snake animation"
+          add: './output/github-contribution-grid-snake.svg'
