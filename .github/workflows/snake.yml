@@ -2,7 +2,7 @@ name: Generate Snake Animation
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs every day
+    - cron: "0 0 * * *" # Daily
   workflow_dispatch:
 
 permissions:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout main branch
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -27,12 +27,15 @@ jobs:
 
       - name: Commit and push to output branch
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          
+          # Create orphan output branch
           git checkout --orphan output
-          git reset --hard
-          mkdir -p output
-          mv output/github-contribution-grid-snake.svg .
-          git add github-contribution-grid-snake.svg
-          git commit -m "Generated snake animation"
+          git rm -rf .
+          
+          # Copy generated file into orphan branch
+          cp -r output ./
+          git add output/github-contribution-grid-snake.svg
+          git commit -m "Generate snake animation"
           git push -f origin output
