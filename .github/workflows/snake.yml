@@ -22,9 +22,13 @@ jobs:
           outputs: |
             ./output/github-contribution-grid-snake.svg
 
+      - name: Move the generated file to root (optional)
+        run: mv ./output/github-contribution-grid-snake.svg ./github-contribution-grid-snake.svg
+
       - name: Commit and push the generated snake
         uses: EndBug/add-and-commit@v9
         with:
           author_name: github-actions
           author_email: github-actions@github.com
           message: "Generate snake animation"
+          add: 'github-contribution-grid-snake.svg'
